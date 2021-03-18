@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "testApi": "newman run tests/backend/collection/Todoist.json -e tests/backend/envVariables/QA.json -r htmlextra --reporter-htmlextra-export tests/backend/reports/todoisApiTestReport.html"
   },
   "author": "",
   "license": "ISC"

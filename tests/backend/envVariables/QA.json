@@ -1,0 +1,29 @@
+{
+	"id": "c5f60ed5-fa53-4c4f-b4eb-4a2da5bf75d0",
+	"name": "QA",
+	"values": [
+		{
+			"key": "baseURL",
+			"value": "https://api.todoist.com/rest/v1/projects",
+			"enabled": true
+		},
+		{
+			"key": "token",
+			"value": "77ef18f0d2b1c5a4ab4163d21949cab1e4fb0718",
+			"enabled": true
+		},
+		{
+			"key": "projectName",
+			"value": "Wizeline",
+			"enabled": true
+		},
+		{
+			"key": "projectId",
+			"value": "",
+			"enabled": true
+		}
+	],
+	"_postman_variable_scope": "environment",
+	"_postman_exported_at": "2021-03-18T20:52:11.084Z",
+	"_postman_exported_using": "Postman/8.0.7"
+}

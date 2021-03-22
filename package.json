@@ -1,11 +1,29 @@
 {
   "name": "newman",
   "version": "1.0.0",
-  "description": "",
+  "description": "Newman Tests - Wizeline Certification QA",
   "main": "index.js",
-  "scripts": {
-    "testApi": "newman run tests/backend/collection/Todoist.json -e tests/backend/envVariables/QA.json -r htmlextra --reporter-htmlextra-export tests/backend/reports/todoisApiTestReport.html"
+  "directories": {
+    "test": "tests"
   },
-  "author": "",
-  "license": "ISC"
+  "scripts": {
+    "testQA": "newman run tests/backend/collection/TasksTodoist.json -e tests/backend/envVariables/QA.json -r htmlextra --reporter-htmlextra-export tests/backend/reports/tasksQA_Report.html",
+    "testQADDT": "newman run tests/backend/collection/TasksTodoistDDT.json -d tests/backend/data/tasksDDT.csv -e tests/backend/envVariables/QA.json -r htmlextra --reporter-htmlextra-export tests/backend/reports/tasksQA_DDT_Report.html",
+    "testPRD": "newman run tests/backend/collection/TasksTodoist.json --env-var token=$TOKEN_TODOIST -e tests/backend/envVariables/PRD.json -r htmlextra --reporter-htmlextra-export tests/backend/reports/tasksQA_PRD_Report.html"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ruvaz/newman-test.git"
+  },
+  "keywords": [
+    "newman",
+    "postman",
+    "collection"
+  ],
+  "author": "Ruben Vazquez",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ruvaz/newman-test/issues"
+  },
+  "homepage": "https://github.com/ruvaz/newman-test#readme"
 }

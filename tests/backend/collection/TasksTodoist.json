@@ -1,0 +1,470 @@
+{
+	"info": {
+		"_postman_id": "6e35e68c-5e01-45c2-be64-78eeefb122a8",
+		"name": "Tasks Todoist",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Create Task",
+			"item": [
+				{
+					"name": "Create a new task",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Successful Task created\", function () {\r",
+									"    pm.expect(pm.response.code).to.be.eql(200);\r",
+									"});\r",
+									"\r",
+									"var jsonData = pm.response.json();\r",
+									"\r",
+									"var taskName = pm.environment.get(\"taskContent\"); \r",
+									"\r",
+									"pm.environment.set(\"taskId\", jsonData.id);\r",
+									"\r",
+									"pm.test(\"Task name is correct\", function () {\r",
+									"    pm.expect(jsonData.content).to.eql(taskName);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Check the active environmen QA\", () => {\r",
+									"  pm.expect(pm.environment.name).to.eql(\"QA\");\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Content-Type header is application/json\", () => {\r",
+									"  pm.expect(pm.response.headers.get('Content-Type')).to.eql('application/json');\r",
+									"});\r",
+									"\r",
+									"pm.test(\"response must be valid and have a body\", function () {\r",
+									"     pm.response.to.be.ok;\r",
+									"     pm.response.to.be.withBody;\r",
+									"     pm.response.to.be.json;\r",
+									"});\r",
+									"\r",
+									"const schema = {\r",
+									"   \"id\": \"integer\",\r",
+									"\t\"assigner\": \"number\",\r",
+									"\t\"project_id\": \"number\",\r",
+									"\t\"section_id\":\"number\",\r",
+									"\t\"order\": \"number\",\r",
+									"\t\"content\": \"string\",\r",
+									"\t\"completed\": \"boolean\",\r",
+									"\t\"label_ids\": \"array\",\r",
+									"\t\"priority\": \"number\",\r",
+									"\t\"comment_count\": \"number\",\r",
+									"\t\"creator\": \"number\",\r",
+									"\t\"created\": \"string\",\r",
+									"\t\"due\": \"array\",\r",
+									"\t\"url\":\"string\"\r",
+									"};\r",
+									"\r",
+									"pm.test('Schema for Task is valid', function() {\r",
+									"  pm.response.to.have.jsonSchema(schema);\r",
+									"});\r",
+									"\r",
+									"// to fail\r",
+									"pm.test(\"Item not found\", function () {\r",
+									"    pm.expect(pm.response.text()).to.include(\"Item not found\");\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "X-Requested-Id",
+								"value": "$(uuidgen)",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n\t\"content\": \"{{taskContent}}\",\r\n\t\"due_string\": \"2021-03-26 12:00\",\r\n\t\"due_lang\": \"en\",\r\n\t\"priority\": 4\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseTaskUrl}}",
+							"host": [
+								"{{baseTaskUrl}}"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Get tasks",
+			"item": [
+				{
+					"name": "Get active tasks",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Successful Get Active tasks\", function () {\r",
+									"    pm.expect(pm.response.code).to.be.eq(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Content-Type header is application/json\", () => {\r",
+									"  pm.expect(pm.response.headers.get('Content-Type')).to.eql('application/json');\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response must be valid and have a body\", function () {\r",
+									"     pm.response.to.be.ok;\r",
+									"     pm.response.to.be.withBody;\r",
+									"     pm.response.to.be.json;\r",
+									"});\r",
+									"\r",
+									"const schema = {\r",
+									"   \"id\": \"integer\",\r",
+									"\t\"assigner\": \"number\",\r",
+									"\t\"project_id\": \"number\",\r",
+									"\t\"section_id\":\"number\",\r",
+									"\t\"order\": \"number\",\r",
+									"\t\"content\": \"string\",\r",
+									"\t\"completed\": \"boolean\",\r",
+									"\t\"label_ids\": \"array\",\r",
+									"\t\"priority\": \"number\",\r",
+									"\t\"comment_count\": \"number\",\r",
+									"\t\"creator\": \"number\",\r",
+									"\t\"created\": \"string\",\r",
+									"\t\"due\": \"array\",\r",
+									"\t\"url\":\"string\"\r",
+									"};\r",
+									"pm.test(\"List of task not Empty \", function () {\r",
+									"    pm.expect(pm.response.text()).to.include(\"[]\");\r",
+									"});\r",
+									"pm.test('Schema is valid', function() {\r",
+									"  pm.response.to.have.jsonSchema(schema);\r",
+									"});\r",
+									"\r",
+									"// to fail\r",
+									"pm.test(\"List of task Empty \", function () {\r",
+									"    pm.expect(pm.response.text()).to.eql(\"[]\");\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseTaskUrl}}",
+							"host": [
+								"{{baseTaskUrl}}"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Update Task",
+			"item": [
+				{
+					"name": "Update Task",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Successful task update\", function () {\r",
+									"    pm.response.to.have.status(204);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response time is less than 400ms\", () => {\r",
+									"  pm.expect(pm.response.responseTime).to.be.below(400);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Without Body\", function () {\r",
+									"    pm.expect(pm.response.text()).to.be.empty;\r",
+									"});\r",
+									"\r",
+									"// to fail\r",
+									"pm.test(\"Item not found\", function () {\r",
+									"    pm.expect(pm.response.text()).to.include(\"Item not found\");\r",
+									"});\r",
+									"\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "X-Requested-Id",
+								"value": "$(uuidgen)",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\"content\": \"Buy Coffee\"}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseTaskUrl}}/{{taskId}}",
+							"host": [
+								"{{baseTaskUrl}}"
+							],
+							"path": [
+								"{{taskId}}"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Close Task",
+			"item": [
+				{
+					"name": "Close Task",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Successful Task closed\", function () {\r",
+									"    pm.expect(pm.response.code).to.be.eq(204);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response should be okay to process\", function(){\r",
+									"    pm.response.to.not.be.error;\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response time is less than 400ms\", function () {\r",
+									"    pm.expect(pm.response.responseTime).to.be.below(400);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Without Body\", function () {\r",
+									"    pm.expect(pm.response.text()).to.be.empty;\r",
+									"});\r",
+									"\r",
+									"// to fail\r",
+									"pm.test(\"Item not found\", function () {\r",
+									"    pm.expect(pm.response.text()).to.include(\"Item not found\");\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "X-Requested-Id",
+								"value": "$(uuidgen)",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\"content\": \"Buy Coffee\"}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseTaskUrl}}/{{taskId}}/close",
+							"host": [
+								"{{baseTaskUrl}}"
+							],
+							"path": [
+								"{{taskId}}",
+								"close"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Reopen Task",
+			"item": [
+				{
+					"name": "Reopen Task",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Successful Task Reopened\", function () {\r",
+									"    pm.expect(pm.response.code).to.be.eq(204);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"response should be okay to process\", function () {\r",
+									"    pm.response.to.not.be.error;\r",
+									"    pm.response.to.have.jsonBody(undefined);\r",
+									"    pm.response.to.not.have.jsonBody(\"error\");\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Without Body\", function () {\r",
+									"    pm.expect(pm.response.text()).to.be.empty;\r",
+									"});\r",
+									"\r",
+									"// to fail\r",
+									"pm.test(\"Item not found\", function () {\r",
+									"    pm.expect(pm.response.text()).to.include(\"Item not found\");\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "X-Requested-Id",
+								"value": "$(uuidgen)",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\"content\": \"Buy Coffee\"}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseTaskUrl}}/{{taskId}}/reopen",
+							"host": [
+								"{{baseTaskUrl}}"
+							],
+							"path": [
+								"{{taskId}}",
+								"reopen"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Delete Task",
+			"item": [
+				{
+					"name": "Delete Task",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Succeful Task Deleted\", function () {\r",
+									"    pm.response.to.have.status(204);\r",
+									"}); \r",
+									"\r",
+									"pm.test(\"Without Body response\", function () {\r",
+									"    pm.expect(pm.response.text()).to.be.empty;\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response time is less than 500ms\", () => {\r",
+									"  pm.expect(pm.response.responseTime).to.be.below(500);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Body matches string\", function () {\r",
+									"    pm.expect(pm.response.text()).to.include(\"\");\r",
+									"});\r",
+									"\r",
+									"// to fail\r",
+									"pm.test(\"response must be valid and have a body\", function () {\r",
+									"     pm.response.to.be.ok;\r",
+									"     pm.response.to.be.withBody;\r",
+									"     pm.response.to.be.json;\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{baseTaskUrl}}/{{taskId}}",
+							"host": [
+								"{{baseTaskUrl}}"
+							],
+							"path": [
+								"{{taskId}}"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"auth": {
+		"type": "bearer",
+		"bearer": [
+			{
+				"key": "token",
+				"value": "{{token}}",
+				"type": "string"
+			}
+		]
+	},
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					"pm.test(\"Status code success\", function () {",
+					"    pm.response.to.be.success;",
+					"});",
+					""
+				]
+			}
+		}
+	]
+}

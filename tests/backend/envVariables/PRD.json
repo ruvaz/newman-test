@@ -1,24 +1,24 @@
 {
-	"id": "c5f60ed5-fa53-4c4f-b4eb-4a2da5bf75d0",
-	"name": "QA",
+	"id": "1009b6b2-fd27-4b21-84bb-449264a91e47",
+	"name": "PRD",
 	"values": [
-		{
-			"key": "token",
-			"value": "77ef18f0d2b1c5a4ab4163d21949cab1e4fb0718",
-			"enabled": true
-		},
 		{
 			"key": "baseTaskUrl",
 			"value": "https://api.todoist.com/rest/v1/tasks",
 			"enabled": true
 		},
 		{
-			"key": "taskContent",
-			"value": "Play Guittar",
+			"key": "token",
+			"value": "",
 			"enabled": true
 		},
 		{
 			"key": "taskId",
+			"value": "",
+			"enabled": true
+		},
+		{
+			"key": "taskContent",
 			"value": "",
 			"enabled": true
 		},
@@ -39,6 +39,6 @@
 		}
 	],
 	"_postman_variable_scope": "environment",
-	"_postman_exported_at": "2021-03-22T06:14:11.884Z",
+	"_postman_exported_at": "2021-03-22T06:17:27.905Z",
 	"_postman_exported_using": "Postman/8.0.7"
 }

@@ -34,7 +34,7 @@ Use the `testQA` script to run all task tests.
 npm run testQA
 ```
 
-![Testcafé Reporter HTML](assets/testQA.png "Testcafé Reporter HTML")
+![Newman QA Reporter HTML](assets/testQA.png "Newman QA Reporter HTML")
 
 
 Use the `testQADDT` script to run  several task from a csv file.
@@ -45,7 +45,7 @@ Use the `testQADDT` script to run  several task from a csv file.
 npm run testQADDT
 ```
 
-![Testcafé Reporter HTML](assets/testQADDT.png "Testcafé Reporter HTML")
+![Newman QA DDT Reporter HTML](assets/testQADDT.png "Newman QA DDT Reporter HTML")
 
 
 Use the `testPRD` script to run all tests in CI/CD,   geting the token by CLI.
